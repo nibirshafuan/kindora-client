@@ -152,7 +152,7 @@ export function Footer() {
 
         <div className="flex flex-col items-center justify-between gap-4 pt-8 text-center sm:flex-row sm:text-left">
           <p className="text-sm text-muted-foreground">
-            © {new Date().getFullYear()} Kindora. All rights reserved.
+            © 2026 Kindora. All rights reserved.
           </p>
 
           <p className="flex items-center gap-1.5 text-sm text-muted-foreground">
@@ -164,3 +164,4 @@ export function Footer() {
     </footer>
   );
 }
+
