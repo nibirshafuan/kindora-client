@@ -8,7 +8,6 @@ import {
   CalendarDays,
   MapPin,
   CalendarX,
-  LoaderCircle,
   AlertCircle,
 } from "lucide-react";
 
@@ -42,10 +41,9 @@ export function RecentEventsSection() {
         const apiUrl =
           process.env.NEXT_PUBLIC_API_URL || "http://localhost:5000";
 
-        const response = await fetch(
-          `${apiUrl}/api/events?limit=6`,
-          { cache: "no-store" }
-        );
+        const response = await fetch(`${apiUrl}/api/events?limit=6`, {
+          cache: "no-store",
+        });
 
         if (!response.ok) {
           throw new Error("Unable to load events. Please try again later.");
@@ -79,10 +77,17 @@ export function RecentEventsSection() {
       year: "numeric",
     });
 
+  const eventGridClass =
+    events.length === 1
+      ? "mx-auto grid w-full max-w-sm grid-cols-1"
+      : events.length === 2
+        ? "mx-auto grid w-full max-w-4xl grid-cols-1 sm:grid-cols-2"
+        : "grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3";
+
   return (
-    <section className="bg-secondary/30 py-20 sm:py-24">
+    <section className="bg-secondary/30 py-14 sm:py-16">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-        <div className="mb-12 flex flex-col justify-between gap-5 sm:flex-row sm:items-end">
+        <div className="mb-10 flex flex-col justify-between gap-5 sm:flex-row sm:items-end">
           <div className="max-w-2xl">
             <p className="mb-3 text-sm font-bold uppercase tracking-[0.18em] text-primary">
               Make a Difference Today
@@ -153,13 +158,13 @@ export function RecentEventsSection() {
             </Link>
           </div>
         ) : (
-          <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
+          <div className={`${eventGridClass} gap-6`}>
             {events.map((event) => (
               <article
                 key={event._id}
                 className="group overflow-hidden rounded-2xl border border-border bg-card transition-all duration-300 hover:-translate-y-1 hover:border-primary/30 hover:shadow-xl hover:shadow-primary/5"
               >
-                <div className="relative h-52 overflow-hidden bg-secondary">
+                <div className="relative h-44 overflow-hidden bg-secondary">
                   {event.imageUrl ? (
                     <Image
                       src={event.imageUrl}
@@ -180,17 +185,14 @@ export function RecentEventsSection() {
                   </span>
                 </div>
 
-                <div className="p-5">
+                <div className="p-4">
                   <h3 className="line-clamp-2 min-h-14 text-lg font-bold leading-7 text-foreground transition-colors group-hover:text-primary">
                     {event.title}
                   </h3>
 
                   <div className="mt-4 space-y-3">
                     <div className="flex items-center gap-2 text-sm text-muted-foreground">
-                      <CalendarDays
-                        size={17}
-                        className="shrink-0 text-primary"
-                      />
+                      <CalendarDays size={17} className="shrink-0 text-primary" />
                       <span>{formatDate(event.eventDate)}</span>
                     </div>
 
@@ -216,3 +218,4 @@ export function RecentEventsSection() {
     </section>
   );
 }
+
