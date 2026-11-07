@@ -5,6 +5,7 @@ import { FeaturesSection } from "@/components/features-section";
 import { RecentEventsSection } from "@/components/recent-events-section";
 import { PastEventsSection } from "@/components/past-events-section";
 import { NewsletterSection } from "@/components/newsletter-section";
+import { Footer } from "@/components/footer";
 
 export default function Home() {
   return (
@@ -19,6 +20,8 @@ export default function Home() {
         <PastEventsSection />
         <NewsletterSection />
       </main>
+
+      <Footer />
     </>
   );
 }
