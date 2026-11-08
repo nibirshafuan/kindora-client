@@ -111,8 +111,8 @@ export default function RegisterPage() {
     try {
       const result = await authClient.signIn.social({
         provider: "google",
-        callbackURL: "http://localhost:3000/",
-        errorCallbackURL: "/register",
+        callbackURL: `${window.location.origin}/`,
+        errorCallbackURL: `${window.location.origin}/register`,
       });
 
       if (result.error) {
@@ -318,6 +318,7 @@ export default function RegisterPage() {
     </main>
   );
 }
+
 
 
 

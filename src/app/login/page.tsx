@@ -59,8 +59,8 @@ export default function LoginPage() {
     try {
       const result = await authClient.signIn.social({
         provider: "google",
-        callbackURL: "http://localhost:3000/",
-        errorCallbackURL: "http://localhost:3000/login",
+        callbackURL: `${window.location.origin}/`,
+        errorCallbackURL: `${window.location.origin}/login`,
       });
 
       if (result.error) {
@@ -162,4 +162,5 @@ export default function LoginPage() {
     </main>
   );
 }
+
 
