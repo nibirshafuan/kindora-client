@@ -320,27 +320,44 @@ function EventDetailsContent() {
                       <LogIn size={18} /> Login to Join
                     </Link>
                   ) : (
-                    <button
-                      type="button"
-                      onClick={joined ? handleLeaveEvent : handleJoin}
-                      disabled={joining}
-                      className={`flex h-12 w-full items-center justify-center gap-2 rounded-xl text-sm font-bold transition hover:opacity-90 disabled:cursor-not-allowed disabled:opacity-60 ${
-                        joined
-                          ? "border border-destructive/30 bg-destructive/10 text-destructive hover:bg-destructive/15"
-                          : "bg-primary text-primary-foreground"
-                      }`}
-                    >
-                      {joining ? (
-                        <LoaderCircle size={18} className="animate-spin" />
-                      ) : joined ? (
-                        <LogOut size={18} />
-                      ) : (
-                        <HeartHandshake size={18} />
-                      )}
-                      {joining
-                        ? joined ? "Cancelling..." : "Joining..."
-                        : joined ? "Cancel Participation" : "Join This Event"}
-                    </button>
+                    joined ? (
+                      <div className="space-y-3">
+                        <div className="flex h-12 w-full items-center justify-center gap-2 rounded-xl border border-emerald-500/20 bg-emerald-500/10 text-sm font-bold text-emerald-700 dark:text-emerald-400">
+                          <CheckCircle2 size={19} />
+                          Already Joined
+                        </div>
+                        <p className="text-center text-xs text-muted-foreground">
+                          You are registered for this event.
+                        </p>
+                        <button
+                          type="button"
+                          onClick={handleLeaveEvent}
+                          disabled={joining}
+                          className="flex h-12 w-full items-center justify-center gap-2 rounded-xl border border-destructive/30 bg-background text-sm font-bold text-destructive transition hover:bg-destructive/10 disabled:cursor-not-allowed disabled:opacity-60"
+                        >
+                          {joining ? (
+                            <LoaderCircle size={18} className="animate-spin" />
+                          ) : (
+                            <LogOut size={18} />
+                          )}
+                          {joining ? "Cancelling..." : "Cancel Participation"}
+                        </button>
+                      </div>
+                    ) : (
+                      <button
+                        type="button"
+                        onClick={handleJoin}
+                        disabled={joining}
+                        className="flex h-12 w-full items-center justify-center gap-2 rounded-xl bg-primary text-sm font-bold text-primary-foreground transition hover:opacity-90 disabled:cursor-not-allowed disabled:opacity-60"
+                      >
+                        {joining ? (
+                          <LoaderCircle size={18} className="animate-spin" />
+                        ) : (
+                          <HeartHandshake size={18} />
+                        )}
+                        {joining ? "Joining..." : "Join This Event"}
+                      </button>
+                    )
                   )}
                   {!sessionPending && !session?.user && isUpcoming && (
                     <p className="mt-3 text-center text-xs text-muted-foreground">
@@ -373,6 +390,8 @@ export default function EventDetailsPage() {
     </Suspense>
   );
 }
+
+
 
 
 
