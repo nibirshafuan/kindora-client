@@ -1,4 +1,4 @@
-﻿"use client";
+"use client";
 
 import { Suspense, useEffect, useState } from "react";
 import Link from "next/link";
@@ -8,6 +8,7 @@ import {
   ArrowLeft, CalendarDays, Clock3, MapPin, HeartHandshake,
   LoaderCircle, Users, CheckCircle2, LogIn
 } from "lucide-react";
+import { toast } from "sonner";
 import { authClient, getAuthToken } from "@/lib/auth-client";
 import { Navbar } from "@/components/navbar";
 import { Footer } from "@/components/footer";
@@ -35,7 +36,6 @@ function EventDetailsContent() {
   const [error, setError] = useState("");
   const [joining, setJoining] = useState(false);
   const [joined, setJoined] = useState(false);
-  const [message, setMessage] = useState("");
 
   useEffect(() => {
     const fetchEvent = async () => {
@@ -109,7 +109,6 @@ function EventDetailsContent() {
     if (!session?.user) return;
 
     setJoining(true);
-    setMessage("");
 
     try {
       const token = await getAuthToken();
@@ -128,7 +127,7 @@ function EventDetailsContent() {
 
       if (response.status === 409) {
         setJoined(true);
-        setMessage("You have already joined this event.");
+        toast.info("You have already joined this event.");
         return;
       }
 
@@ -137,9 +136,9 @@ function EventDetailsContent() {
       }
 
       setJoined(true);
-      setMessage("You have successfully joined this event!");
+      toast.success("You have successfully joined this event!");
     } catch (err) {
-      setMessage(err instanceof Error ? err.message : "Something went wrong.");
+      toast.error(err instanceof Error ? err.message : "Something went wrong.");
     } finally {
       setJoining(false);
     }
@@ -301,12 +300,6 @@ function EventDetailsContent() {
                       {joining ? <LoaderCircle size={18} className="animate-spin" /> : joined ? <CheckCircle2 size={18} /> : <HeartHandshake size={18} />}
                       {joining ? "Joining..." : joined ? "Already Joined" : "Join This Event"}
                     </button>
-                  )}
-
-                  {message && (
-                    <p className="mt-4 rounded-xl bg-secondary px-4 py-3 text-center text-sm font-medium text-foreground">
-                      {message}
-                    </p>
                   )}
                   {!sessionPending && !session?.user && isUpcoming && (
                     <p className="mt-3 text-center text-xs text-muted-foreground">

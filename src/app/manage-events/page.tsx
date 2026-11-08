@@ -1,4 +1,4 @@
-﻿"use client";
+"use client";
 
 import { useCallback, useEffect, useState } from "react";
 import Link from "next/link";
@@ -7,6 +7,7 @@ import {
   ArrowLeft, CalendarDays, MapPin, Pencil, Trash2,
   PlusCircle, LoaderCircle, X, Save, AlertCircle
 } from "lucide-react";
+import { toast } from "sonner";
 import { authClient, getAuthToken } from "@/lib/auth-client";
 import { Navbar } from "@/components/navbar";
 import { Footer } from "@/components/footer";
@@ -46,7 +47,6 @@ export default function ManageEventsPage() {
   const [events, setEvents] = useState<EventData[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
-  const [notice, setNotice] = useState("");
   const [editing, setEditing] = useState<EventData | null>(null);
   const [form, setForm] = useState(emptyForm);
   const [saving, setSaving] = useState(false);
@@ -89,7 +89,6 @@ export default function ManageEventsPage() {
   }, [isPending, session, loadEvents]);
 
   const openEdit = (event: EventData) => {
-    setNotice("");
     setEditing(event);
     setForm({
       title: event.title,
@@ -106,13 +105,12 @@ export default function ManageEventsPage() {
     if (!editing) return;
 
     if (new Date(form.eventDate).getTime() <= Date.now()) {
-      setNotice("Please select a future date and time.");
+      toast.error("Please select a future date and time.");
       return;
     }
 
     try {
       setSaving(true);
-      setNotice("");
 
       const token = await getToken();
       const response = await fetch(`${API_URL}/api/events/${editing._id}`, {
@@ -133,10 +131,10 @@ export default function ManageEventsPage() {
       }
 
       setEditing(null);
-      setNotice("Event updated successfully!");
+      toast.success("Event updated successfully!");
       await loadEvents();
     } catch (err) {
-      setNotice(err instanceof Error ? err.message : "Update failed.");
+      toast.error(err instanceof Error ? err.message : "Update failed.");
     } finally {
       setSaving(false);
     }
@@ -150,7 +148,6 @@ export default function ManageEventsPage() {
 
     try {
       setDeletingId(event._id);
-      setNotice("");
 
       const token = await getToken();
       const response = await fetch(`${API_URL}/api/events/${event._id}`, {
@@ -164,9 +161,9 @@ export default function ManageEventsPage() {
       }
 
       setEvents((current) => current.filter((item) => item._id !== event._id));
-      setNotice("Event deleted successfully!");
+      toast.success("Event deleted successfully!");
     } catch (err) {
-      setNotice(err instanceof Error ? err.message : "Delete failed.");
+      toast.error(err instanceof Error ? err.message : "Delete failed.");
     } finally {
       setDeletingId("");
     }
@@ -271,12 +268,6 @@ export default function ManageEventsPage() {
                   Refresh List
                 </button>
               </div>
-
-              {notice && (
-                <p className="mb-5 rounded-xl border border-border bg-secondary px-4 py-3 text-sm font-medium text-foreground">
-                  {notice}
-                </p>
-              )}
 
               <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
                 {events.map((event) => (
@@ -436,10 +427,6 @@ export default function ManageEventsPage() {
                   className="w-full rounded-xl border border-border bg-background px-4 py-3 text-sm leading-6 text-foreground outline-none focus:border-primary"
                 />
               </div>
-
-              {notice && (
-                <p className="rounded-lg bg-secondary px-3 py-2 text-sm text-foreground">{notice}</p>
-              )}
 
               <div className="flex flex-col-reverse gap-3 border-t border-border pt-4 sm:flex-row sm:justify-end">
                 <button

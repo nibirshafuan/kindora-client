@@ -1,4 +1,4 @@
-﻿"use client";
+"use client";
 
 import { useEffect, useState, type FormEvent } from "react";
 import Link from "next/link";
@@ -13,6 +13,7 @@ import {
   CheckCircle2,
 } from "lucide-react";
 
+import { toast } from "sonner";
 import { authClient } from "@/lib/auth-client";
 import { Navbar } from "@/components/navbar";
 import { Footer } from "@/components/footer";
@@ -24,7 +25,6 @@ export default function ProfilePage() {
   const [image, setImage] = useState("");
   const [saving, setSaving] = useState(false);
   const [error, setError] = useState("");
-  const [success, setSuccess] = useState("");
 
   const user = session?.user;
 
@@ -38,7 +38,6 @@ export default function ProfilePage() {
   const handleUpdate = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     setError("");
-    setSuccess("");
 
     if (!name.trim()) {
       setError("Please enter your name.");
@@ -69,7 +68,7 @@ export default function ProfilePage() {
         throw new Error(result.error.message || "Unable to update profile.");
       }
 
-      setSuccess("Your profile has been updated successfully.");
+      toast.success("Your profile has been updated successfully.");
     } catch (err) {
       setError(
         err instanceof Error ? err.message : "Profile update failed."
@@ -247,16 +246,6 @@ export default function ProfilePage() {
                   </div>
                 )}
 
-                {success && (
-                  <div
-                    role="status"
-                    className="flex items-start gap-2 rounded-lg border border-primary/20 bg-primary/5 px-3 py-2.5 text-sm text-primary"
-                  >
-                    <CheckCircle2 size={17} className="mt-0.5 shrink-0" />
-                    {success}
-                  </div>
-                )}
-
                 <div className="flex justify-end border-t border-border pt-3">
                   <button
                     type="submit"
@@ -281,4 +270,3 @@ export default function ProfilePage() {
     </>
   );
 }
-

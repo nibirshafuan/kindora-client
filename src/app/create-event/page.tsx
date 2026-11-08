@@ -1,12 +1,13 @@
-﻿"use client";
+"use client";
 
 import { useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import {
   ArrowLeft, CalendarDays, Clock3, MapPin, Image as ImageIcon,
-  FileText, LoaderCircle, PlusCircle, CheckCircle2
+  FileText, LoaderCircle, PlusCircle
 } from "lucide-react";
+import { toast } from "sonner";
 import { authClient, getAuthToken } from "@/lib/auth-client";
 import { Navbar } from "@/components/navbar";
 import { Footer } from "@/components/footer";
@@ -30,21 +31,17 @@ export default function CreateEventPage() {
   const [imageUrl, setImageUrl] = useState("");
   const [description, setDescription] = useState("");
   const [loading, setLoading] = useState(false);
-  const [error, setError] = useState("");
-  const [success, setSuccess] = useState("");
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    setError("");
-    setSuccess("");
 
     if (!session?.user) {
-      setError("Please login before creating an event.");
+      toast.error("Please login before creating an event.");
       return;
     }
 
     if (new Date(eventDate).getTime() <= Date.now()) {
-      setError("Please select a future date and time.");
+      toast.error("Please select a future date and time.");
       return;
     }
 
@@ -79,7 +76,7 @@ export default function CreateEventPage() {
         throw new Error(data.message || "Unable to create event.");
       }
 
-      setSuccess("Your event has been created successfully!");
+      toast.success("Your event has been created successfully!");
 
       if (data.event?._id) {
         setTimeout(() => router.push(`/events/${data.event._id}`), 1200);
@@ -87,7 +84,7 @@ export default function CreateEventPage() {
         setTimeout(() => router.push("/events"), 1200);
       }
     } catch (err) {
-      setError(err instanceof Error ? err.message : "Something went wrong.");
+      toast.error(err instanceof Error ? err.message : "Something went wrong.");
     } finally {
       setLoading(false);
     }
@@ -256,19 +253,6 @@ export default function CreateEventPage() {
                   </p>
                 </div>
 
-                {error && (
-                  <p role="alert" className="rounded-xl border border-red-500/20 bg-red-500/10 px-4 py-3 text-sm font-medium text-red-600">
-                    {error}
-                  </p>
-                )}
-
-                {success && (
-                  <p className="flex items-center gap-2 rounded-xl border border-green-500/20 bg-green-500/10 px-4 py-3 text-sm font-medium text-green-700">
-                    <CheckCircle2 size={18} />
-                    {success}
-                  </p>
-                )}
-
                 <div className="flex flex-col-reverse gap-3 border-t border-border pt-6 sm:flex-row sm:justify-end">
                   <Link
                     href="/events"
@@ -279,7 +263,7 @@ export default function CreateEventPage() {
 
                   <button
                     type="submit"
-                    disabled={loading || !!success}
+                    disabled={loading}
                     className="inline-flex h-12 items-center justify-center gap-2 rounded-xl bg-primary px-7 text-sm font-bold text-primary-foreground transition hover:opacity-90 disabled:cursor-not-allowed disabled:opacity-60"
                   >
                     {loading ? (
@@ -304,4 +288,3 @@ export default function CreateEventPage() {
     </>
   );
 }
-

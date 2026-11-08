@@ -1,4 +1,4 @@
-﻿"use client";
+"use client";
 
 import Link from "next/link";
 import { useState, type FormEvent } from "react";
@@ -18,6 +18,7 @@ import {
   Circle,
   LoaderCircle,
 } from "lucide-react";
+import { toast } from "sonner";
 import { authClient } from "@/lib/auth-client";
 
 export default function RegisterPage() {
@@ -30,8 +31,6 @@ export default function RegisterPage() {
   const [photoURL, setPhotoURL] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
-  const [message, setMessage] = useState("");
-  const [isError, setIsError] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [isGoogleLoading, setIsGoogleLoading] = useState(false);
 
@@ -41,18 +40,14 @@ export default function RegisterPage() {
 
   const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    setMessage("");
-    setIsError(false);
 
     if (!hasMinLength || !hasUppercase || !hasLowercase) {
-      setIsError(true);
-      setMessage("Please meet all password requirements.");
+      toast.error("Please meet all password requirements.");
       return;
     }
 
     if (password !== confirmPassword) {
-      setIsError(true);
-      setMessage("Passwords do not match. Please try again.");
+      toast.error("Passwords do not match. Please try again.");
       return;
     }
 
@@ -63,8 +58,7 @@ export default function RegisterPage() {
           throw new Error("Invalid URL");
         }
       } catch {
-        setIsError(true);
-        setMessage("Please provide a valid profile photo URL.");
+        toast.error("Please provide a valid profile photo URL.");
         return;
       }
     }
@@ -80,23 +74,16 @@ export default function RegisterPage() {
       });
 
       if (result.error) {
-        setIsError(true);
-        setMessage(result.error.message || "Registration failed. Please try again.");
+        toast.error(result.error.message || "Registration failed. Please try again.");
         return;
       }
 
-      setMessage("Account created successfully! Redirecting to homepage...");
-      setIsError(false);
+      toast.success("Account created successfully! Welcome to Kindora.");
 
       router.push("/");
       router.refresh();
     } catch (error) {
-      setIsError(true);
-      setMessage(
-        error instanceof Error
-          ? error.message
-          : "Something went wrong. Please try again."
-      );
+      toast.error(error instanceof Error ? error.message : "Something went wrong. Please try again.");
     } finally {
       setIsLoading(false);
     }
@@ -104,8 +91,6 @@ export default function RegisterPage() {
 
 
   const handleGoogleSignUp = async () => {
-    setMessage("");
-    setIsError(false);
     setIsGoogleLoading(true);
 
     try {
@@ -116,13 +101,11 @@ export default function RegisterPage() {
       });
 
       if (result.error) {
-        setIsError(true);
-        setMessage(result.error.message || "Google sign up failed.");
+        toast.error(result.error.message || "Google sign up failed.");
         setIsGoogleLoading(false);
       }
     } catch (error) {
-      setIsError(true);
-      setMessage(error instanceof Error ? error.message : "Google sign up failed.");
+      toast.error(error instanceof Error ? error.message : "Google sign up failed.");
       setIsGoogleLoading(false);
     }
   };
@@ -268,12 +251,6 @@ export default function RegisterPage() {
                   </button>
                 </div>
               </div>
-
-              {message && (
-                <p role="alert" className={`rounded-lg px-3 py-2 text-xs font-medium sm:col-span-2 ${isError ? "bg-red-50 text-red-700" : "bg-secondary text-primary"}`}>
-                  {message}
-                </p>
-              )}
 
               <button type="submit" disabled={isLoading} className="flex h-11 w-full items-center justify-center gap-2 rounded-xl bg-primary px-5 text-sm font-bold text-primary-foreground shadow-sm transition-all hover:-translate-y-0.5 hover:shadow-lg disabled:cursor-not-allowed disabled:opacity-60 sm:col-span-2">
                 {isLoading ? <><LoaderCircle size={17} className="animate-spin" /> Creating Account...</> : <>Create Account <ArrowRight size={17} /></>}

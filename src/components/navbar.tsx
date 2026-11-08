@@ -1,6 +1,7 @@
-﻿"use client";
+"use client";
 
 import Link from "next/link";
+import Image from "next/image";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import {
@@ -114,9 +115,12 @@ export function Navbar() {
                 className="inline-flex h-10 items-center gap-2 rounded-xl border border-input bg-background px-3 text-sm font-semibold text-foreground transition-colors hover:bg-secondary"
               >
                 {user.image ? (
-                  <img
+                  <Image
                     src={user.image}
                     alt={user.name || "Profile"}
+                    width={28}
+                    height={28}
+                    unoptimized
                     className="size-7 rounded-full object-cover"
                   />
                 ) : (
@@ -228,9 +232,12 @@ export function Navbar() {
               <>
                 <div className="flex items-center gap-3 border-t border-border pt-4">
                   {user.image ? (
-                    <img
+                    <Image
                       src={user.image}
                       alt={user.name || "Profile"}
+                      width={40}
+                      height={40}
+                      unoptimized
                       className="size-10 rounded-full object-cover"
                     />
                   ) : (

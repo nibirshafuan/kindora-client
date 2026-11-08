@@ -1,87 +1,81 @@
-﻿# Kindora – Community for Good
+# \# Kindora – Community for Good
 
-Kindora is a social development events platform where people can discover community events, participate in meaningful activities, and create positive social impact.
+#
 
-## Live Website
-https://YOUR-VERCEL-URL.vercel.app
+# Kindora is a community-driven social development events platform that connects people with meaningful volunteer opportunities.
 
-## Key Features
+#
 
-1. Email and Password Authentication.
-2. Google OAuth Login and Registration.
-3. Browse upcoming community events.
-4. Search events and filter by category.
-5. Create, edit, and delete personal events.
-6. Join events and prevent duplicate participation.
-7. View joined events in chronological order.
-8. View and update user profiles.
-9. Responsive design for mobile, tablet, and desktop.
-10. Light and Dark theme with persistence.
-11. Loading skeletons for better user experience.
-12. JWT-protected backend APIs.
+# \## Live Website
 
-## Technologies Used
+# https://kindora-client-five.vercel.app
 
-- Next.js App Router
-- React
-- TypeScript
-- Tailwind CSS
-- Node.js
-- Express.js
-- MongoDB
-- Better Auth
-- JWT
-- next-themes
+#
 
-## Application Routes
+# \## Key Features
 
-| Route | Description |
-|---|---|
-| / | Homepage |
-| /events | Upcoming Events |
-| /events/[id] | Event Details |
-| /create-event | Create Event |
-| /manage-events | Manage Events |
-| /joined-events | Joined Events |
-| /profile | User Profile |
-| /login | Login |
-| /register | Registration |
+# \- Secure email and password authentication.
 
-## Installation
+# \- Google OAuth login and registration.
 
-Clone the repository:
+# \- Discover upcoming community events.
 
-    git clone https://github.com/nibirshafuan/kindora-client.git
+# \- Search and filter events by category.
 
-Enter the project directory:
+# \- Create new community events.
 
-    cd kindora-client
+# \- Join events with duplicate participation prevention.
 
-Install dependencies:
+# \- Manage, update, and delete your own events.
 
-    npm install
+# \- View joined events.
 
-Create a .env.local file:
+# \- Update user profile information.
 
-    NEXT_PUBLIC_API_URL=http://localhost:5000
+# \- Responsive design for mobile, tablet, and desktop.
 
-Run the development server:
+# \- Dark and light theme support.
 
-    npm run dev
+# \- JWT-protected backend APIs.
 
-Open http://localhost:3000
+#
 
-## Production Build
+# \## Technologies Used
 
-    npm run build
-    npm start
+# \- Next.js, React, TypeScript
 
-## Author
+# \- Tailwind CSS
 
-Nibir Shafuan  
-Department of Computer Science and Engineering  
-Daffodil International University
+# \- Node.js and Express.js
 
-## License
+# \- MongoDB
 
-Developed for academic purposes.
+# \- Better Auth and JWT
+
+# \- Google OAuth
+
+# \- Sonner
+
+#
+
+# \## GitHub Repositories
+
+# \- Client: https://github.com/nibirshafuan/kindora-client
+
+# \- Server: https://github.com/nibirshafuan/kindora-server
+
+#
+
+# \## Author
+
+# Nibir Shafuan
+
+# Department of Computer Science and Engineering
+
+# Daffodil International University
+
+#
+
+# \## License
+
+# Developed for academic purposes.
