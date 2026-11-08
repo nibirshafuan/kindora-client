@@ -333,7 +333,7 @@ function EventDetailsContent() {
                           type="button"
                           onClick={handleLeaveEvent}
                           disabled={joining}
-                          className="flex h-12 w-full items-center justify-center gap-2 rounded-xl border border-destructive/30 bg-background text-sm font-bold text-destructive transition hover:bg-destructive/10 disabled:cursor-not-allowed disabled:opacity-60"
+                          className="group flex h-12 w-full items-center justify-center gap-2 rounded-xl border border-destructive/30 bg-background text-sm font-bold text-destructive shadow-sm transition-all duration-200 ease-out hover:scale-[1.02] hover:border-destructive hover:bg-destructive/10 hover:shadow-md active:scale-[0.98] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-destructive focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-60 disabled:hover:scale-100"
                         >
                           {joining ? (
                             <LoaderCircle size={18} className="animate-spin" />
@@ -390,6 +390,7 @@ export default function EventDetailsPage() {
     </Suspense>
   );
 }
+
 
 
 
