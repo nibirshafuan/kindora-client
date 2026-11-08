@@ -33,6 +33,7 @@ export default function RegisterPage() {
   const [message, setMessage] = useState("");
   const [isError, setIsError] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
+  const [isGoogleLoading, setIsGoogleLoading] = useState(false);
 
   const hasMinLength = password.length >= 6;
   const hasUppercase = /[A-Z]/.test(password);
@@ -101,6 +102,30 @@ export default function RegisterPage() {
     }
   };
 
+
+  const handleGoogleSignUp = async () => {
+    setMessage("");
+    setIsError(false);
+    setIsGoogleLoading(true);
+
+    try {
+      const result = await authClient.signIn.social({
+        provider: "google",
+        callbackURL: "http://localhost:3000/",
+        errorCallbackURL: "/register",
+      });
+
+      if (result.error) {
+        setIsError(true);
+        setMessage(result.error.message || "Google sign up failed.");
+        setIsGoogleLoading(false);
+      }
+    } catch (error) {
+      setIsError(true);
+      setMessage(error instanceof Error ? error.message : "Google sign up failed.");
+      setIsGoogleLoading(false);
+    }
+  };
   const Requirement = ({
     valid,
     children,
@@ -265,8 +290,18 @@ export default function RegisterPage() {
             </div>
 
             <div className="grid grid-cols-2 gap-3">
-              <button type="button" disabled className="flex h-10 items-center justify-center gap-2 rounded-xl border border-input bg-background px-3 text-sm font-semibold text-muted-foreground opacity-60">
-                <span className="text-lg font-extrabold">G</span> Google
+              <button
+                type="button"
+                onClick={handleGoogleSignUp}
+                disabled={isGoogleLoading}
+                className="flex h-10 items-center justify-center gap-2 rounded-xl border border-input bg-background px-3 text-sm font-semibold text-foreground transition-all hover:border-primary hover:bg-primary/5 disabled:cursor-not-allowed disabled:opacity-60"
+              >
+                {isGoogleLoading ? (
+                  <LoaderCircle size={17} className="animate-spin" />
+                ) : (
+                  <span className="text-lg font-extrabold">G</span>
+                )}
+                {isGoogleLoading ? "Connecting..." : "Google"}
               </button>
               <button type="button" disabled className="flex h-10 items-center justify-center gap-2 rounded-xl border border-input bg-background px-3 text-sm font-semibold text-muted-foreground opacity-60">
                 <span className="flex size-5 items-center justify-center rounded-full bg-foreground text-[10px] font-extrabold text-background">GH</span> GitHub
@@ -283,3 +318,6 @@ export default function RegisterPage() {
     </main>
   );
 }
+
+
+

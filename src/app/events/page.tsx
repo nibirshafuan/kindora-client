@@ -2,8 +2,11 @@
 
 import { useCallback, useEffect, useState } from "react";
 import Link from "next/link";
+import { Navbar } from "@/components/navbar";
+import { Footer } from "@/components/footer";
 import Image from "next/image";
 import {
+  ArrowLeft,
   Search,
   CalendarDays,
   MapPin,
@@ -141,9 +144,19 @@ export default function EventsPage() {
     });
 
   return (
-    <main className="min-h-screen bg-background">
+    <>
+      <Navbar />
+      <main className="min-h-screen bg-background">
       <section className="border-b border-border bg-secondary/30">
         <div className="mx-auto max-w-7xl px-4 py-14 sm:px-6 sm:py-16 lg:px-8">
+          <Link
+            href="/"
+            className="mb-8 inline-flex items-center gap-2 rounded-xl border border-border bg-card px-4 py-2.5 text-sm font-semibold text-foreground transition-colors hover:border-primary hover:bg-primary hover:text-primary-foreground"
+          >
+            <ArrowLeft size={17} />
+            Back to Home
+          </Link>
+
           <p className="mb-3 text-sm font-bold uppercase tracking-[0.18em] text-primary">
             Discover Opportunities
           </p>
@@ -368,5 +381,12 @@ export default function EventsPage() {
         )}
       </section>
     </main>
+      <Footer />
+    </>
   );
 }
+
+
+
+
+

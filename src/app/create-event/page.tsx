@@ -7,7 +7,7 @@ import {
   ArrowLeft, CalendarDays, Clock3, MapPin, Image as ImageIcon,
   FileText, LoaderCircle, PlusCircle, CheckCircle2
 } from "lucide-react";
-import { authClient } from "@/lib/auth-client";
+import { authClient, getAuthToken } from "@/lib/auth-client";
 import { Navbar } from "@/components/navbar";
 import { Footer } from "@/components/footer";
 
@@ -51,8 +51,7 @@ export default function CreateEventPage() {
     try {
       setLoading(true);
 
-      const tokenResult = await authClient.token();
-      const token = tokenResult.data?.token;
+      const token = await getAuthToken();
 
       if (!token) {
         throw new Error("Authentication token not found. Please login again.");
@@ -305,3 +304,4 @@ export default function CreateEventPage() {
     </>
   );
 }
+

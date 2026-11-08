@@ -50,6 +50,11 @@ export function Navbar() {
 
   const profileLinks = [
     {
+      href: "/profile",
+      label: "View Profile",
+      icon: UserCircle,
+    },
+    {
       href: "/create-event",
       label: "Create Event",
       icon: PlusCircle,
@@ -295,3 +300,4 @@ export function Navbar() {
     </header>
   );
 }
+

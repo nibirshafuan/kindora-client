@@ -1,36 +1,87 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+﻿# Kindora – Community for Good
 
-## Getting Started
+Kindora is a social development events platform where people can discover community events, participate in meaningful activities, and create positive social impact.
 
-First, run the development server:
+## Live Website
+https://YOUR-VERCEL-URL.vercel.app
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+## Key Features
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+1. Email and Password Authentication.
+2. Google OAuth Login and Registration.
+3. Browse upcoming community events.
+4. Search events and filter by category.
+5. Create, edit, and delete personal events.
+6. Join events and prevent duplicate participation.
+7. View joined events in chronological order.
+8. View and update user profiles.
+9. Responsive design for mobile, tablet, and desktop.
+10. Light and Dark theme with persistence.
+11. Loading skeletons for better user experience.
+12. JWT-protected backend APIs.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Technologies Used
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+- Next.js App Router
+- React
+- TypeScript
+- Tailwind CSS
+- Node.js
+- Express.js
+- MongoDB
+- Better Auth
+- JWT
+- next-themes
 
-## Learn More
+## Application Routes
 
-To learn more about Next.js, take a look at the following resources:
+| Route | Description |
+|---|---|
+| / | Homepage |
+| /events | Upcoming Events |
+| /events/[id] | Event Details |
+| /create-event | Create Event |
+| /manage-events | Manage Events |
+| /joined-events | Joined Events |
+| /profile | User Profile |
+| /login | Login |
+| /register | Registration |
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## Installation
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+Clone the repository:
 
-## Deploy on Vercel
+    git clone https://github.com/nibirshafuan/kindora-client.git
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+Enter the project directory:
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+    cd kindora-client
+
+Install dependencies:
+
+    npm install
+
+Create a .env.local file:
+
+    NEXT_PUBLIC_API_URL=http://localhost:5000
+
+Run the development server:
+
+    npm run dev
+
+Open http://localhost:3000
+
+## Production Build
+
+    npm run build
+    npm start
+
+## Author
+
+Nibir Shafuan  
+Department of Computer Science and Engineering  
+Daffodil International University
+
+## License
+
+Developed for academic purposes.
