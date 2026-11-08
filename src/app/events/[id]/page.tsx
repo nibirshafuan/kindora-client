@@ -1,11 +1,11 @@
-"use client";
+﻿"use client";
 
 import { Suspense, useEffect, useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { useParams } from "next/navigation";
 import {
-  ArrowLeft, CalendarDays, Clock3, MapPin, HeartHandshake,
+  ArrowLeft, CalendarDays, Clock3, MapPin, HeartHandshake, LogOut,
   LoaderCircle, Users, CheckCircle2, LogIn
 } from "lucide-react";
 import { toast } from "sonner";
@@ -137,6 +137,35 @@ function EventDetailsContent() {
 
       setJoined(true);
       toast.success("You have successfully joined this event!");
+    } catch (err) {
+      toast.error(err instanceof Error ? err.message : "Something went wrong.");
+    } finally {
+      setJoining(false);
+    }
+  };
+
+  const handleLeaveEvent = async () => {
+    if (!window.confirm("Are you sure you want to cancel your participation?")) return;
+
+    setJoining(true);
+
+    try {
+      const token = await getAuthToken();
+      if (!token) throw new Error("Please login again.");
+
+      const response = await fetch(`${API_URL}/api/events/${eventId}/join`, {
+        method: "DELETE",
+        headers: { Authorization: `Bearer ${token}` },
+      });
+
+      const data = await response.json();
+
+      if (!response.ok || !data.success) {
+        throw new Error(data.message || "Unable to cancel participation.");
+      }
+
+      setJoined(false);
+      toast.success("Your participation has been cancelled.");
     } catch (err) {
       toast.error(err instanceof Error ? err.message : "Something went wrong.");
     } finally {
@@ -293,12 +322,24 @@ function EventDetailsContent() {
                   ) : (
                     <button
                       type="button"
-                      onClick={handleJoin}
-                      disabled={joining || joined}
-                      className="flex h-12 w-full items-center justify-center gap-2 rounded-xl bg-primary text-sm font-bold text-primary-foreground hover:opacity-90 disabled:cursor-not-allowed disabled:opacity-60"
+                      onClick={joined ? handleLeaveEvent : handleJoin}
+                      disabled={joining}
+                      className={`flex h-12 w-full items-center justify-center gap-2 rounded-xl text-sm font-bold transition hover:opacity-90 disabled:cursor-not-allowed disabled:opacity-60 ${
+                        joined
+                          ? "border border-destructive/30 bg-destructive/10 text-destructive hover:bg-destructive/15"
+                          : "bg-primary text-primary-foreground"
+                      }`}
                     >
-                      {joining ? <LoaderCircle size={18} className="animate-spin" /> : joined ? <CheckCircle2 size={18} /> : <HeartHandshake size={18} />}
-                      {joining ? "Joining..." : joined ? "Already Joined" : "Join This Event"}
+                      {joining ? (
+                        <LoaderCircle size={18} className="animate-spin" />
+                      ) : joined ? (
+                        <LogOut size={18} />
+                      ) : (
+                        <HeartHandshake size={18} />
+                      )}
+                      {joining
+                        ? joined ? "Cancelling..." : "Joining..."
+                        : joined ? "Cancel Participation" : "Join This Event"}
                     </button>
                   )}
                   {!sessionPending && !session?.user && isUpcoming && (
@@ -332,6 +373,7 @@ export default function EventDetailsPage() {
     </Suspense>
   );
 }
+
 
 
 

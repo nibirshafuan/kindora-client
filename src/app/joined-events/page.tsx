@@ -11,11 +11,13 @@ import {
   LoaderCircle,
   RefreshCw,
   ArrowRight,
+  LogOut,
 } from "lucide-react";
 
 import { authClient, getAuthToken } from "@/lib/auth-client";
 import { Navbar } from "@/components/navbar";
 import { Footer } from "@/components/footer";
+import { toast } from "sonner";
 
 const API_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:5000";
 
@@ -42,6 +44,7 @@ export default function JoinedEventsPage() {
   const [events, setEvents] = useState<EventData[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
+  const [leavingId, setLeavingId] = useState<string | null>(null);
 
   const loadJoinedEvents = useCallback(async () => {
     try {
@@ -77,6 +80,35 @@ export default function JoinedEventsPage() {
       setLoading(false);
     }
   }, []);
+
+  const handleLeaveEvent = async (eventId: string) => {
+    if (!window.confirm("Are you sure you want to leave this event?")) return;
+
+    try {
+      setLeavingId(eventId);
+
+      const token = await getAuthToken();
+      if (!token) throw new Error("Please login again.");
+
+      const response = await fetch(`${API_URL}/api/events/${eventId}/join`, {
+        method: "DELETE",
+        headers: { Authorization: `Bearer ${token}` },
+      });
+
+      const data = await response.json();
+
+      if (!response.ok || !data.success) {
+        throw new Error(data.message || "Unable to leave this event.");
+      }
+
+      toast.success("You have left the event successfully.");
+      await loadJoinedEvents();
+    } catch (err) {
+      toast.error(err instanceof Error ? err.message : "Something went wrong.");
+    } finally {
+      setLeavingId(null);
+    }
+  };
 
   useEffect(() => {
     if (!isPending && session?.user) {
@@ -262,6 +294,15 @@ export default function JoinedEventsPage() {
                           View Event Details
                           <ArrowRight size={16} />
                         </Link>
+                        <button
+                          type="button"
+                          onClick={() => handleLeaveEvent(event._id)}
+                          disabled={leavingId === event._id}
+                          className="mt-3 inline-flex h-10 w-full items-center justify-center gap-2 rounded-lg border border-destructive/30 text-sm font-semibold text-destructive transition hover:bg-destructive/10 disabled:cursor-not-allowed disabled:opacity-50"
+                        >
+                          <LogOut size={16} />
+                          {leavingId === event._id ? "Leaving..." : "Leave Event"}
+                        </button>
                       </div>
                     </div>
                   </article>
@@ -276,5 +317,6 @@ export default function JoinedEventsPage() {
     </>
   );
 }
+
 
 
