@@ -1,81 +1,121 @@
-# \# Kindora – Community for Good
+﻿# Kindora – Community for Good
 
-#
+A community-driven platform designed to connect people with meaningful volunteer opportunities and community development events.
 
-# Kindora is a community-driven social development events platform that connects people with meaningful volunteer opportunities.
+**Live Website:** https://kindora-client-five.vercel.app
 
-#
+## About the Project
 
-# \## Live Website
+Kindora makes it easier for people to discover, organize, and participate in community events. Users can explore upcoming opportunities, join events, manage their own activities, and connect with a community focused on making a positive impact.
 
-# https://kindora-client-five.vercel.app
+## My Role
 
-#
+**Full-Stack Developer**
 
-# \## Key Features
+Worked on the frontend and backend development of the application.
 
-# \- Secure email and password authentication.
+## Key Features
 
-# \- Google OAuth login and registration.
+- Secure email and password authentication
+- Google OAuth login and registration
+- Browse upcoming community events
+- Search and filter events by category
+- Create new community events
+- Join events with duplicate participation prevention
+- Manage, update, and delete created events
+- View joined events
+- Update user profile information
+- Responsive interface for mobile, tablet, and desktop
+- Dark and light theme support
+- JWT-protected backend APIs
 
-# \- Discover upcoming community events.
+## Technology Stack
 
-# \- Search and filter events by category.
+### Frontend
+- Next.js 16
+- React 19
+- TypeScript
+- Tailwind CSS 4
+- Better Auth
+- Next Themes
+- Lucide React
+- Sonner
 
-# \- Create new community events.
+### Backend
+- Node.js
+- Express.js
+- MongoDB
+- JWT
+- Google OAuth
 
-# \- Join events with duplicate participation prevention.
+## Getting Started
 
-# \- Manage, update, and delete your own events.
+### Prerequisites
 
-# \- View joined events.
+- Node.js
+- npm
+- Git
 
-# \- Update user profile information.
+### Installation
 
-# \- Responsive design for mobile, tablet, and desktop.
+1. Clone the repository:
 
-# \- Dark and light theme support.
+   ```bash
+   git clone https://github.com/nibirshafuan/kindora-client.git
+   ```
 
-# \- JWT-protected backend APIs.
+2. Navigate to the project directory:
 
-#
+   ```bash
+   cd kindora-client
+   ```
 
-# \## Technologies Used
+3. Install dependencies:
 
-# \- Next.js, React, TypeScript
+   ```bash
+   npm install
+   ```
 
-# \- Tailwind CSS
+4. Configure the environment variables required by the application.
 
-# \- Node.js and Express.js
+5. Start the development server:
 
-# \- MongoDB
+   ```bash
+   npm run dev
+   ```
 
-# \- Better Auth and JWT
+6. Open your browser and visit:
 
-# \- Google OAuth
+   ```text
+   http://localhost:3000
+   ```
 
-# \- Sonner
+## Available Scripts
 
-#
+| Command | Description |
+|---|---|
+| `npm run dev` | Start development server |
+| `npm run build` | Build the application |
+| `npm run start` | Start production server |
+| `npm run lint` | Run ESLint |
 
-# \## GitHub Repositories
+## Project Repositories
 
-# \- Client: https://github.com/nibirshafuan/kindora-client
+- **Frontend:** https://github.com/nibirshafuan/kindora-client
+- **Backend:** https://github.com/nibirshafuan/kindora-server
+- **Live Application:** https://kindora-client-five.vercel.app
 
-# \- Server: https://github.com/nibirshafuan/kindora-server
+## Developer
 
-#
+**Nibir Shafuan**
 
-# \## Author
+Computer Science and Engineering
+Daffodil International University
 
-# Nibir Shafuan
+- GitHub: https://github.com/nibirshafuan
+- LinkedIn: https://www.linkedin.com/in/nibirshafuan
+- Portfolio: https://nibirshafuan.vercel.app
 
-# Department of Computer Science and Engineering
+## License
 
-# Daffodil International University
-
-#
-
-# \## License
-
-# Developed for academic purposes.
+Developed for academic purposes.
